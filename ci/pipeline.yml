@@ -60,9 +60,22 @@ jobs:
 - name: deploy-review
   plan:
   - get: pal-tracker
+    passed: [build]
   - get: pal-tracker-artifacts
     trigger: true
     passed: [build]
+  - task: migrate database
+    file: pal-tracker/ci/migrateDatabase.yml
+    params:
+      CF_API_URL: https://api.sys.pikes.pal.pivotal.io
+      CF_USERNAME: xiaoyun.tang@wellsfargo.com
+      CF_PASSWORD: b4d47a6b
+      CF_ORG: kelly-tang-org
+      CF_SPACE: review
+      MYSQL_IP: 192.168.16.87
+      DATABASE_NAME: cf_be6c46bd_a9d7_438c_8ef1_53363e9cc28a
+      DATABASE_USERNAME: MR56F5fn0yhydvUy
+      DATABASE_PASSWORD: 0g502edmvF2j1C6W
   - put: review-deployment
     params:
       manifest: pal-tracker/manifest-review.yml
@@ -73,8 +86,21 @@ jobs:
 - name: deploy-production
   plan:
   - get: pal-tracker
+    passed: [deploy-review]
   - get: pal-tracker-artifacts
     passed: [deploy-review]
+  - task: migrate database
+    file: pal-tracker/ci/migrateDatabase.yml
+    params:
+      CF_API_URL: https://api.sys.pikes.pal.pivotal.io
+      CF_USERNAME: xiaoyun.tang@wellsfargo.com
+      CF_PASSWORD: b4d47a6b
+      CF_ORG: kelly-tang-org
+      CF_SPACE: production
+      MYSQL_IP: 192.168.16.87
+      DATABASE_NAME: cf_127791f6_ce39_4b0f_8c65_86264fbd7cd1
+      DATABASE_USERNAME: kIB0nLsNfKM22MAg
+      DATABASE_PASSWORD: 6KjAbWUNpTocSkI6
   - put: production-deployment
     params:
       manifest: pal-tracker/manifest-production.yml

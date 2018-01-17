@@ -8,12 +8,10 @@ import java.util.HashMap;
 import java.util.List;
 
 public class InMemoryTimeEntryRepository extends TimeEntryRepository {
-    private HashMap<Long, TimeEntry > repo;
+    private HashMap<Long, TimeEntry > repo = new HashMap<Long,TimeEntry>();
 
     public TimeEntry create(TimeEntry timeEntry) {
-        if (repo == null) {
-            repo = new HashMap<Long,TimeEntry>();
-        }
+
 
         if (timeEntry.getId() == 0l) {
             timeEntry.setId(repo.size() + 1);

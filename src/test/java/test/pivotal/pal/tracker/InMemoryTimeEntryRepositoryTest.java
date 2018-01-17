@@ -22,6 +22,7 @@ public class InMemoryTimeEntryRepositoryTest {
 
         TimeEntry readEntry = repo.find(createdTimeEntry.getId());
         assertThat(readEntry).isEqualTo(expected);
+
     }
 
     @Test

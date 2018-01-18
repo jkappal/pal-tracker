@@ -7,7 +7,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
-public class InMemoryTimeEntryRepository extends TimeEntryRepository {
+public class InMemoryTimeEntryRepository implements TimeEntryRepository {
     private HashMap<Long, TimeEntry > repo = new HashMap<Long,TimeEntry>();
 
     public TimeEntry create(TimeEntry timeEntry) {
